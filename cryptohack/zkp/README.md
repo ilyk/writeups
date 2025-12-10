@@ -3,161 +3,80 @@
 **Platform:** [CryptoHack](https://cryptohack.org/)
 **Category:** Zero-Knowledge Proofs
 **Author:** ilyk
-**Completion Date:** December 2025
+**Date:** December 2025
 
 ---
 
 ## Overview
 
-This directory contains detailed writeups for solved challenges from CryptoHack's Zero-Knowledge Proofs category. Each writeup follows a professional security research format, documenting the vulnerability exploited, exploitation methodology, root causes, and remediation strategies.
+Detailed writeups for 14 solved challenges from CryptoHack's Zero-Knowledge Proofs category. Each writeup documents the vulnerability exploited, exploitation methodology, and remediation strategies.
 
-**Total Challenges Solved:** 5/8
-
----
-
-## Challenges Completed
-
-| # | Challenge | Points | Difficulty | Key Concept |
-|---|-----------|--------|------------|-------------|
-| 1 | [Pairing-Based Cryptography](01-pairing-based-cryptography.md) | 100 | Easy | Bilinear pairing misuse |
-| 2 | [Mister Saplin's Preview](02-mister-saplins-preview.md) | 125 | Medium | SHVZK vs. malicious verifiers |
-| 3 | [Couples](03-couples.md) | 150 | Medium-Hard | OR proof soundness |
-| 4 | [Let's Prove It](04-lets-prove-it.md) | 150 | Medium-Hard | Verifier rewinding attacks |
-| 5 | [Hamiltonicity](05-hamiltonicity.md) | 100 | Medium | Incomplete Fiat-Shamir hashing |
-
-**Total Points Earned:** 625
+**Challenges Solved:** 14
+**Challenges Remaining:** 4 (Hamiltonicity 2, Mister Saplins The Prover, Let's Prove It Again, Couples)
 
 ---
 
-## Key Learnings
+## Challenges
 
-### 1. **Pairing-Based Cryptography is Powerful but Dangerous**
-Bilinear pairings can expose secrets if not properly randomized. The bilinearity property that makes them useful for advanced protocols also creates algebraic paths to witness extraction if mishandled.
-
-### 2. **Special Honest-Verifier ZK ≠ Real-World Security**
-SHVZK protocols assume honest verifiers—a fatal assumption against adversaries. Malicious verifiers can choose challenges to extract witnesses. **Lesson:** Always use protocols secure against malicious verifiers (or use Fiat-Shamir).
-
-### 3. **OR Proofs Require Careful Challenge Management**
-Composing Sigma protocols for disjunctive statements is subtle. Without proper commitment binding, both sub-proofs can be simulated, breaking soundness entirely. **Lesson:** Commitments must be fixed before challenges.
-
-### 4. **Rewinding Attacks Exploit Determinism**
-When provers reuse randomness or respond deterministically to repeated challenges, malicious verifiers can extract witnesses via the "special soundness" property. **Lesson:** Fresh, cryptographic randomness for every proof run.
-
-### 5. **Hash the Entire Statement (Fiat-Shamir)**
-Fiat-Shamir challenges must include the complete statement being proven. Omitting parts allows proof substitution attacks—proving about statement S₁ while claiming S₂. **Lesson:** `c = H(statement, commitment, params)` with no shortcuts.
-
----
-
-## Common Vulnerability Patterns
-
-### 1. Randomness Issues
-- **Reused nonces** in Sigma protocols → Witness extraction
-- **Weak PRNG** → Predictable challenges/responses
-- **No fresh randomness** → Replay and rewinding attacks
-
-### 2. Incomplete Hashing
-- **Missing statement components** in Fiat-Shamir → Proof substitution
-- **No domain separation** → Cross-protocol attacks
-- **Omitted public parameters** → Context confusion
-
-### 3. Weak Security Notions
-- **SHVZK instead of Full ZK** → Malicious verifier attacks
-- **Honest-verifier assumptions** → Real adversaries break the protocol
-- **Interactive without protections** → Rewinding exploits
-
-### 4. Protocol Composition Errors
-- **OR proofs without binding** → Dual simulation
-- **Missing commitment schemes** → Adaptive forgery
-- **Improper challenge decomposition** → Soundness failure
+| # | Challenge | Points | Writeup |
+|---|-----------|--------|---------|
+| 1 | ZKP Introduction | 5 | [01-zkp-introduction.md](01-zkp-introduction.md) |
+| 2 | Proofs of Knowledge | 20 | [02-proofs-of-knowledge.md](02-proofs-of-knowledge.md) |
+| 3 | Special Soundness | 25 | [03-special-soundness.md](03-special-soundness.md) |
+| 4 | Honest Verifier Zero Knowledge | 30 | [04-hvzk.md](04-hvzk.md) |
+| 5 | Non-Interactive | 35 | [05-non-interactive.md](05-non-interactive.md) |
+| 6 | Pairing-Based Cryptography | 50 | [06-pairing-based-cryptography.md](06-pairing-based-cryptography.md) |
+| 7 | Too Honest | 50 | [07-too-honest.md](07-too-honest.md) |
+| 8 | OR Proof | 75 | [08-or-proof.md](08-or-proof.md) |
+| 9 | Mister Saplin's Preview | 80 | [09-mister-saplins-preview.md](09-mister-saplins-preview.md) |
+| 10 | Hamiltonicity | 100 | [10-hamiltonicity.md](10-hamiltonicity.md) |
+| 11 | Couples | 100 | [11-couples.md](11-couples.md) |
+| 12 | Let's Prove It | 120 | [12-lets-prove-it.md](12-lets-prove-it.md) |
+| 13 | Fischlin Transform | 180 | [13-fischlin-transform.md](13-fischlin-transform.md) |
+| 14 | Ticket Maestro | 200 | [14-ticket-maestro.md](14-ticket-maestro.md) |
 
 ---
 
-## Exploitation Techniques Used
+## Key Concepts Covered
 
-1. **Bilinear Pairing Exploitation**: Leveraging pairing properties to solve for secrets
-2. **Malicious Challenge Selection**: Choosing non-uniform challenges to extract information
-3. **Backward Commitment Construction**: Computing commitments after seeing challenges
-4. **Verifier Rewinding**: Requesting multiple transcripts with same commitment
-5. **Statement Substitution**: Proving about graph G' while claiming graph G
-6. **Linear System Construction**: Building equations from multiple transcripts to solve for witnesses
+### Sigma Protocols
+- Basic three-move structure (Commit-Challenge-Response)
+- Special soundness and witness extraction
+- Honest-verifier zero-knowledge (HVZK)
+- Fiat-Shamir transformation to NIZK
 
----
+### Attack Techniques
+- Randomness reuse exploitation
+- Verifier rewinding attacks
+- Incomplete Fiat-Shamir hashing
+- Edge case exploitation
+- OR proof soundness attacks
 
-## Defensive Principles
-
-### Zero-Knowledge Proof Security Checklist
-
-✅ **Use Proven Protocols**: Schnorr, Groth16, PLONK, STARKs—not ad-hoc designs
-✅ **Fiat-Shamir Done Right**: `c = H(statement, all_public_inputs, commitment, domain_tag)`
-✅ **Fresh Randomness**: Cryptographically secure, unique per proof
-✅ **Commitment Binding**: Commitments fixed before challenges (hash commitment or non-interactive)
-✅ **Full Security Proofs**: Prove ZK, soundness, completeness formally
-✅ **Malicious Verifier Resistance**: Assume all verifiers are adversarial
-✅ **Domain Separation**: Different protocols/contexts get different hash prefixes
-✅ **No Rewinding Exploits**: Use non-interactive protocols or protect against transcript collection
+### Advanced Topics
+- Fischlin transform (online extraction)
+- Pairing-based cryptography misuse
+- Protocol composition vulnerabilities
+- Ticket/credential systems
 
 ---
 
-## References & Resources
+## Vulnerability Patterns
 
-### Academic Papers
+1. **Randomness Reuse** — Reusing nonces enables witness extraction via special soundness
+2. **Incomplete Hashing** — Fiat-Shamir challenges must include the full statement
+3. **SHVZK Limitations** — Honest-verifier assumptions fail against malicious verifiers
+4. **Edge Cases** — Unused parameters and boundary conditions create attack surfaces
+5. **Composition Flaws** — Combining secure protocols doesn't guarantee security
+
+---
+
+## References
+
+- [Damgård: On Σ-Protocols](https://www.cs.au.dk/~ivan/Sigma.pdf)
 - [Fiat-Shamir Heuristic](https://link.springer.com/chapter/10.1007/3-540-47721-7_12)
-- [On Σ-Protocols](https://www.win.tue.nl/~berry/CryptographicProtocols/LectureNotes.pdf)
-- [Groth16 zk-SNARK](https://eprint.iacr.org/2016/260)
-- [PLONK](https://eprint.iacr.org/2019/953)
-
-### Educational Resources
-- [ZK Proof Primer](https://zkp.science/)
-- [Justin Thaler's ZK Book](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html)
-- [ZK Security Best Practices](https://eprint.iacr.org/2023/691)
-
-### Tools & Libraries
-- [libsnark](https://github.com/scipr-lab/libsnark)
-- [bellman](https://github.com/zkcrypto/bellman)
-- [circom](https://github.com/iden3/circom)
-- [py_ecc (Ethereum)](https://github.com/ethereum/py_ecc)
+- [Fischlin Transform](https://eprint.iacr.org/2005/089)
+- [ZKProof Community](https://zkproof.org/)
 
 ---
 
-## Challenges Not Yet Solved
-
-The following challenges remain open:
-
-- **Hamiltonicity 2** (175 pts) — Advanced Fiat-Shamir exploitation
-- **Mister Saplins The Prover** (125 pts) — Unknown vulnerability
-- **Let's Prove It Again** (175 pts) — Advanced verifier attacks
-
-These represent advanced topics requiring deeper cryptographic analysis or novel attack vectors.
-
----
-
-## Methodology
-
-Each writeup follows this structure:
-
-1. **Executive Summary**: High-level vulnerability description and impact
-2. **Challenge Description**: Protocol and cryptographic setup
-3. **Vulnerability Analysis**: Root cause and theoretical exploitation
-4. **Exploitation**: Step-by-step attack implementation with code
-5. **Root Causes**: Fundamental design/implementation flaws
-6. **Remediation**: Immediate fixes and long-term security improvements
-7. **Key Takeaways**: Lessons learned and broader implications
-8. **References**: Academic papers and educational resources
-
----
-
-## License & Usage
-
-These writeups are provided for educational purposes. Code snippets are illustrative and should not be used in production systems. All flags have been redacted per standard responsible disclosure practices.
-
----
-
-## Contact
-
-For questions, corrections, or discussions about these writeups:
-- GitHub: [@ilyk](https://github.com/ilyk)
-- Repository: [ilyk/writeups](https://github.com/ilyk/writeups)
-
----
-
-> *Zero-knowledge proofs are the poetry of cryptography—proving truth without revealing secrets. But poetry requires precision. A single misplaced word, one omitted verse, and the oracle speaks lies instead of riddles. These writeups document the moments when the incantations failed, and the secrets—meant to stay hidden—emerged into the light.*
+> *Zero-knowledge proofs are elegant mathematics—until implementation introduces the human element. These writeups document where theory met reality, and reality lost.*

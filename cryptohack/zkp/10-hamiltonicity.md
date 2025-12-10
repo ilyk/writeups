@@ -13,7 +13,7 @@
 
 This challenge exposes a critical vulnerability in Fiat-Shamir transformation implementations: failure to include the complete statement being proven in the challenge hash. By exploiting this omission, we convinced the verifier that a graph *without* a Hamiltonian cycle actually contains one—we simply proved knowledge of a cycle in a *different* graph that we substituted during the protocol. The flag confirms: **not hashing the entire statement is bad**.
 
-**Flag:** `crypto{[REDACTED]_entire_statement_[REDACTED]}`
+**Flag:** *(captured)*
 
 ---
 
@@ -168,7 +168,7 @@ for proof in proofs:
 response = conn.recvall(timeout=30).decode()
 print(response)
 
-# Flag format: crypto{not_hashing_entire_statement_is_bad}
+# Flag received upon successful exploitation
 ```
 
 ---

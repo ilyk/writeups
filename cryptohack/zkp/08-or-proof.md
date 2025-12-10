@@ -1,19 +1,19 @@
-# Couples — OR Proof Soundness (150 pts)
+# OR Proof — Sigma Protocol Composition (75 pts)
 
 **Author:** ilyk
 **Date:** December 2025
 **Platform:** CryptoHack — Zero-Knowledge Proofs
-**Difficulty:** Medium-Hard
+**Difficulty:** Medium
 
-> *Two paths diverged in an encrypted wood. The prover claimed to know one—but proved neither. The verifier, trusting the algebra alone, accepted the lie. We broke soundness by forging both halves with phantom witnesses.*
+> *Two paths diverged in an encrypted wood. The prover claimed to know one—and proved it elegantly. Sigma protocols compose: where one witness suffices for a disjunction, the other branch simulates. The algebra of zero-knowledge, orchestrated.*
 
 ---
 
 ## Executive Summary
 
-This challenge exposes a critical flaw in the implementation of cryptographic OR proofs: improper verification of the composite proof structure. By exploiting weak soundness checks, we constructed a valid-looking transcript for a disjunctive statement ("I know `x` such that `g^x = h₁` OR `g^x = h₂`") without actually knowing either discrete logarithm. The vulnerability lies in the verifier's failure to enforce proper binding between sub-proofs.
+This challenge demonstrates the elegant composition of Sigma protocols for proving disjunctive statements. Using the CDS (Cramer-Damgård-Schoenmakers) OR composition technique, we prove knowledge of a discrete logarithm for one of two public values without revealing which one we know. The key insight: simulate the branch we don't know, respond honestly for the branch we do.
 
-**Flag:** *(captured and verified)*
+**Flag:** *(captured)*
 
 ---
 
