@@ -8,9 +8,9 @@
 
 ## Overview
 
-Writeups for CryptoHack challenges covering cryptography, web security, and zero-knowledge proofs.
+Writeups for CryptoHack challenges covering cryptography, hash functions, web security, and zero-knowledge proofs.
 
-**Total Challenges:** 44
+**Total Challenges:** 56 (54 solved)
 
 ---
 
@@ -19,6 +19,7 @@ Writeups for CryptoHack challenges covering cryptography, web security, and zero
 | Category | Challenges | Points | Status |
 |----------|------------|--------|--------|
 | [Diffie-Hellman](dh/) | 14 | 945 | Complete |
+| [Hash Functions](hashes/) | 14 (12 solved) | 1065/1290 | 82.6% |
 | [Web (JWT/TLS)](web/) | 14 | 850 | Complete |
 | [Zero-Knowledge Proofs](zkp/) | 16 | 1270 | Complete |
 
@@ -33,6 +34,14 @@ Key exchange vulnerabilities, group theory attacks, and matrix-based cryptograph
 - Group theory attacks (3)
 - Matrix trilogy (3)
 - Miscellaneous (1)
+
+### Hash Functions (14 challenges, 12 solved)
+Birthday attacks, MD5 collisions, length extension, preimage attacks, and hash-based signatures.
+- Probability (2)
+- Collisions (5, 4 solved)
+- Length Extension (2, 1 solved)
+- Pre-image (2)
+- Hash-based Crypto (3)
 
 ### Web (14 challenges)
 JWT token attacks and TLS protocol analysis.
@@ -52,6 +61,7 @@ Sigma protocols, Fiat-Shamir, and advanced ZKP attacks.
 | Category | Techniques |
 |----------|------------|
 | DH | Pohlig-Hellman, MITM, Jordan form, smooth primes |
+| Hashes | Birthday attack, MD5 collision, length extension, invariant subspace |
 | Web | Algorithm confusion, key injection, TLS decryption |
 | ZKP | Witness extraction, rewinding, Fischlin transform |
 
@@ -59,6 +69,7 @@ Sigma protocols, Fiat-Shamir, and advanced ZKP attacks.
 
 ## Tools Used
 
-- **Python:** pycryptodome, pwntools, sympy, galois
+- **Python:** pycryptodome, pwntools, sympy, galois, hashpumpy
 - **SageMath:** Matrix operations, Jordan form
 - **Wireshark/tshark:** TLS packet analysis
+- **Hash tools:** fastcoll, HashClash (MD5 collision generation)
