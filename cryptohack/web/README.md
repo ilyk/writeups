@@ -28,15 +28,15 @@ Writeups for the CryptoHack Web category challenges.
 | 13 | Decrypting TLS 1.3 | 35 | Solved |
 | 14 | Authenticated Handshake | 40 | Solved |
 
-### Cloud (0/3 - 0 pts)
+### Cloud (2/3 - 220 pts)
 
 | # | Challenge | Points | Status |
 |---|-----------|--------|--------|
-| 15 | Megalomaniac 1 | ? | Not started |
-| 16 | Megalomaniac 2 | ? | Not started |
-| 17 | Megalomaniac 3 | ? | Not started |
+| 15 | Megalomaniac 1 | 100 | Solved |
+| 16 | Megalomaniac 2 | 125 | Pending |
+| 17 | Megalomaniac 3 | 120 | Solved |
 
-**Total: 14/17 (390 pts)**
+**Total: 16/17 (610 pts)**
 
 ---
 
